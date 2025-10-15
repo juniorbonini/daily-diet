@@ -22,7 +22,7 @@ export default function RootLayout() {
     <Stack
       screenOptions={{
         headerShown: false,
-        contentStyle: { backgroundColor, paddingVertical: 24 },
+        contentStyle: { backgroundColor, paddingHorizontal: 32 },
         
       }}
     />
