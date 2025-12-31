@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator<RoutesParams>();
 
 export function RootNavigation() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="home" component={Home} />
       <Stack.Screen name="feedback" component={Feedback} />
       <Stack.Screen name="statistics" component={Statistic} />

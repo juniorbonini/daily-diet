@@ -1,11 +1,17 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { dietStorage } from "../../storage/diet.storage";
 import { RoutesParams } from "../../types/routes.params";
+import { styles } from "./style";
+import { Button } from "@/components/Button";
+import { colors } from "@/theme/colorTheme";
 
 type NavigationProp = NativeStackNavigationProp<RoutesParams, "home">;
+
+const logoImage = require("@/images/daily-diet-logo.png");
+const userImage = require("@/images/user-image.png");
 
 export function Home() {
   const navigation = useNavigation<NavigationProp>();
@@ -41,46 +47,42 @@ export function Home() {
   }
 
   return (
-    <View style={{ flex: 1, padding: 18 }}>
-      <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 15 }}>
-        RefeiçÕes
-      </Text>
+      <View style={styles.container}>
+        <View style={styles.headerContainer}>
+          <Image source={logoImage} />
+          <Image source={userImage} />
+        </View>
+       <View>
+         <TouchableOpacity onPress={() => {}} activeOpacity={.7} style={styles.dietCalcContainer}>
+          <Text style={styles.titlePercentage}>50%</Text>
+          <Text style={styles.textDiet} >das refeições dentro da dieta</Text>
+        </TouchableOpacity>
+       </View>
+        <Text style={styles.title}>Refeições</Text>
 
-      <FlatList
-        data={fakeDiets}
-        keyExtractor={(item) => item.id}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => handleDetails(item.id)}
-            style={{
-              padding: 12,
-              marginBottom: 8,
-              borderWidth: 1,
-              borderRadius: 8,
-              borderColor: "#ccc",
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
-            <View>
-              <Text style={{ fontWeight: "bold" }}>{item.name}</Text>
-              <Text>
-                {item.date} • {item.hour}
-              </Text>
-            </View>
-            <View
-              style={{
-                width: 10,
-                height: 10,
-                borderRadius: 5,
-                backgroundColor: item.isOnDiet ? "green" : "red",
-                alignSelf: "center",
-              }}
-            ></View>
-          </TouchableOpacity>
-        )}
-      />
-    </View>
+        <Button title="Nova refeição" icon="add" onPress={() => {}} />
+
+        <FlatList
+          data={fakeDiets}
+          keyExtractor={(item) => item.id}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => handleDetails(item.id)}
+              style={styles.dietContainer}
+            >
+              <View>
+                <Text style={styles.dietName}> {item.hour}   |   {item.name}</Text>
+              </View>
+              <View
+                style={[
+                  styles.dietStyle,
+                  { backgroundColor: item.isOnDiet ? `${colors.green["green-mid"]}` : `${colors.red["red-mid"]}` },
+                ]}
+              ></View>
+            </TouchableOpacity>
+          )}
+        />
+      </View>
   );
 }

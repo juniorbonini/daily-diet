@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
 import { Diet } from "../../types/diet";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { dietStorage } from "../../storage/diet.storage";
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
+import { RoutesParams } from "@/types/routes.params";
+import { colors } from "@/theme/colorTheme";
+
+type NavigationProp = NativeStackNavigationProp<RoutesParams, "details">;
 
 export function DietDetails() {
   const route = useRoute();
+  const navigation = useNavigation<NavigationProp>();
   const { id } = route.params as { id: string };
   const [diet, setDiet] = useState<Diet | null>(null);
   const [loading, setLoading] = useState(true);
@@ -30,11 +36,25 @@ export function DietDetails() {
   }
 
   return (
-    <View>
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: diet?.isOnDiet
+          ? `${colors.green["green-mid"]}`
+          : `${colors.red["red-mid"]}`,
+      }}
+    >
       <Text>{diet.name}</Text>
       <Text>{diet.description}</Text>
-      <Text>{diet.date} • {diet.hour}</Text>
+      <Text>
+        {diet.date} • {diet.hour}
+      </Text>
       <Text>{diet.isOnDiet}</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("home")}>
+        <Text>Home Screen</Text>
+      </TouchableOpacity>
     </View>
   );
 }
