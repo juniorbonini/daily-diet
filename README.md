@@ -58,8 +58,8 @@ Etapas planejadas:
 
  Configuração da navegação
 
- [] Criação do tipo Meal
- [] Implementação do AsyncStorage (CRUD)
+ [X] Criação do tipo Meal
+ [X] Implementação do AsyncStorage (CRUD)
  [] Tela Home (listagem de refeições)
  [] Formulário de criação
  [] Tela de detalhes
