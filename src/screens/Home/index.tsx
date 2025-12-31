@@ -1,10 +1,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { dietStorage } from "../../storage/diet.storage";
+import { RoutesParams } from "../../types/routes.params";
 
-type NavigationProp = NativeStackNavigationProp<any>;
+type NavigationProp = NativeStackNavigationProp<RoutesParams, "home">;
 
 export function Home() {
   const navigation = useNavigation<NavigationProp>();
@@ -14,7 +15,7 @@ export function Home() {
       name: "Filé de frango",
       description: "Arroz, 2 Filé de frango, com feijão e salada",
       hour: "12:30",
-      date: "2025-12-12",
+      date: "21-12-2025",
       isOnDiet: true,
     },
     {
@@ -22,7 +23,7 @@ export function Home() {
       name: "Banana",
       description: "Lanche da tarde",
       hour: "16:00",
-      date: "2025-12-12",
+      date: "21-12-2025",
       isOnDiet: true,
     },
     {
@@ -30,43 +31,56 @@ export function Home() {
       name: "Big Mac",
       description: "Lanche do Mc Donalds",
       hour: "20:00",
-      date: "2025-12-12",
+      date: "21-12-2025",
       isOnDiet: false,
     },
   ];
 
-  async function seedDiets() {
-    await AsyncStorage.removeItem("@daily-diet:diet");
-
-    for (const diet of fakeDiets) {
-      await dietStorage.create(diet);
-    }
+  function handleDetails(id: string) {
+    navigation.navigate("details", { id });
   }
 
   return (
-    <View>
-      <Text>Home Screen</Text>
-      <TouchableOpacity onPress={seedDiets}>
-        <Text>Seed fake diets</Text>
-      </TouchableOpacity>
+    <View style={{ flex: 1, padding: 18 }}>
+      <Text style={{ fontSize: 20, fontWeight: "bold", marginBottom: 15 }}>
+        RefeiçÕes
+      </Text>
 
-      <TouchableOpacity
-        onPress={() => navigation.navigate("details", { id: "3" })}
-      >
-        <Text>Go to Details (id 1)</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => navigation.navigate("edit", { id: "3" })}
-      >
-        <Text>Go to Edit (id 2)</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => navigation.navigate("feedback", { id: '2' })}
-      >
-        <Text>Go to Feedback (success)</Text>
-      </TouchableOpacity>
+      <FlatList
+        data={fakeDiets}
+        keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => handleDetails(item.id)}
+            style={{
+              padding: 12,
+              marginBottom: 8,
+              borderWidth: 1,
+              borderRadius: 8,
+              borderColor: "#ccc",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <View>
+              <Text style={{ fontWeight: "bold" }}>{item.name}</Text>
+              <Text>
+                {item.date} • {item.hour}
+              </Text>
+            </View>
+            <View
+              style={{
+                width: 10,
+                height: 10,
+                borderRadius: 5,
+                backgroundColor: item.isOnDiet ? "green" : "red",
+                alignSelf: "center",
+              }}
+            ></View>
+          </TouchableOpacity>
+        )}
+      />
     </View>
   );
 }

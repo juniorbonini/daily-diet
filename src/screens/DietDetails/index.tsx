@@ -33,6 +33,8 @@ export function DietDetails() {
     <View>
       <Text>{diet.name}</Text>
       <Text>{diet.description}</Text>
+      <Text>{diet.date} • {diet.hour}</Text>
+      <Text>{diet.isOnDiet}</Text>
     </View>
   );
 }
