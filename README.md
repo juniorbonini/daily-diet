@@ -52,20 +52,31 @@ Antes de avançar para backend ou lógicas mais complexas, o foco está em:
 Etapas planejadas:
 
 [X] Estrutura inicial do projeto
+
 [X] Configuração do repositório Git
+
 [X] Definição da arquitetura de pastas
+
 [X]Configuração do tema global
 
  Configuração da navegação
 
  [X] Criação do tipo Meal
+ 
  [X] Implementação do AsyncStorage (CRUD)
+ 
  [] Tela Home (listagem de refeições)
+ 
  [] Formulário de criação
+ 
  [] Tela de detalhes
+ 
  [] Edição de refeição
+ 
  [] Exclusão com confirmação
+ 
  [] Estatísticas
+ 
  [] Telas de feedback
 
 ---
