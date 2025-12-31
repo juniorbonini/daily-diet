@@ -11,6 +11,8 @@ export const styles = StyleSheet.create({
     gap: 5,
     backgroundColor: colors.gray[700],
     borderRadius: 8,
+    marginHorizontal: 'auto',
+    marginBottom: 40
   },
   title: {
     color: colors.gray[0],

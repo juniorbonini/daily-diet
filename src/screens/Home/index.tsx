@@ -1,12 +1,12 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
-import { dietStorage } from "../../storage/diet.storage";
-import { RoutesParams } from "../../types/routes.params";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+
 import { styles } from "./style";
-import { Button } from "@/components/Button";
 import { colors } from "@/theme/colorTheme";
+import { Button } from "@/components/Button";
+import { Percent } from "@/components/Percent";
+import { RoutesParams } from "../../types/routes.params";
 
 type NavigationProp = NativeStackNavigationProp<RoutesParams, "home">;
 
@@ -53,14 +53,11 @@ export function Home() {
           <Image source={userImage} />
         </View>
        <View>
-         <TouchableOpacity onPress={() => {}} activeOpacity={.7} style={styles.dietCalcContainer}>
-          <Text style={styles.titlePercentage}>50%</Text>
-          <Text style={styles.textDiet} >das refeições dentro da dieta</Text>
-        </TouchableOpacity>
+        <Percent />
        </View>
         <Text style={styles.title}>Refeições</Text>
 
-        <Button title="Nova refeição" icon="add" onPress={() => {}} />
+        <Button title="Nova refeição" icon="add" onPress={() => navigation.navigate('create')} />
 
         <FlatList
           data={fakeDiets}
@@ -72,7 +69,7 @@ export function Home() {
               style={styles.dietContainer}
             >
               <View>
-                <Text style={styles.dietName}> {item.hour}   |   {item.name}</Text>
+                <Text> {item.hour}   |   {item.name}</Text>
               </View>
               <View
                 style={[
