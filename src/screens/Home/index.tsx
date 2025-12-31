@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigatorProps } from "@react-navigation/native-stack";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Text, TouchableOpacity, View } from "react-native";
 
-type NavigationProp = NativeStackNavigatorProps;
+type NavigationProp = NativeStackNavigationProp<any>;
 
 export function Home() {
   const navigation = useNavigation<NavigationProp>()
