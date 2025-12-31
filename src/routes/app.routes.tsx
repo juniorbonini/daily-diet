@@ -6,8 +6,9 @@ import { Feedback } from "../screens/Feedback";
 import { EditDiet } from "../screens/EditDiet";
 import { CreateDiet } from "../screens/CreateDiet";
 import { DietDetails } from "../screens/DietDetails";
+import { RoutesParams } from "../types/routes.params";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RoutesParams>();
 
 export function RootNavigation() {
   return (
