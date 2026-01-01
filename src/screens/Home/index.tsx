@@ -1,11 +1,14 @@
-import { useNavigation } from "@react-navigation/native";
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import { useCallback, useState } from "react";
+import { FlatList, Image, Text, View } from "react-native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 import { styles } from "./style";
-import { colors } from "@/theme/colorTheme";
+import { Diet } from "@/types/diet";
 import { Button } from "@/components/Button";
+import { DietItem } from "@/components/Diet";
 import { Percent } from "@/components/Percent";
+import { dietStorage } from "@/storage/diet.storage";
 import { RoutesParams } from "../../types/routes.params";
 
 type NavigationProp = NativeStackNavigationProp<RoutesParams, "home">;
@@ -15,36 +18,26 @@ const userImage = require("@/images/user-image.png");
 
 export function Home() {
   const navigation = useNavigation<NavigationProp>();
-  const fakeDiets = [
-    {
-      id: "1",
-      name: "Filé de frango",
-      description: "Arroz, 2 Filé de frango, com feijão e salada",
-      hour: "12:30",
-      date: "21-12-2025",
-      isOnDiet: true,
-    },
-    {
-      id: "2",
-      name: "Banana",
-      description: "Lanche da tarde",
-      hour: "16:00",
-      date: "21-12-2025",
-      isOnDiet: true,
-    },
-    {
-      id: "3",
-      name: "Big Mac",
-      description: "Lanche do Mc Donalds",
-      hour: "20:00",
-      date: "21-12-2025",
-      isOnDiet: false,
-    },
-  ];
+  const [diets, setDiets] = useState<Diet[]>([])
+  const [section, setSection] = useState();
 
   function handleDetails(id: string) {
     navigation.navigate("details", { id });
   }
+
+  useFocusEffect(useCallback(() => {
+    async function fecthDetails() {
+      const data = await dietStorage.getAll();
+      setDiets(data)
+    }
+
+    async function groupDietsByDate() {
+      setSection(section)
+    }
+
+    fecthDetails();
+    groupDietsByDate();
+  }, []))
 
   return (
       <View style={styles.container}>
@@ -60,24 +53,14 @@ export function Home() {
         <Button title="Nova refeição" icon="add" onPress={() => navigation.navigate('create')} />
 
         <FlatList
-          data={fakeDiets}
+          data={diets}
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => handleDetails(item.id)}
-              style={styles.dietContainer}
-            >
-              <View>
-                <Text> {item.hour}   |   {item.name}</Text>
-              </View>
-              <View
-                style={[
-                  styles.dietStyle,
-                  { backgroundColor: item.isOnDiet ? `${colors.green["green-mid"]}` : `${colors.red["red-mid"]}` },
-                ]}
-              ></View>
-            </TouchableOpacity>
+            <DietItem
+            data={item}
+            onPress={() => handleDetails(item.id)}
+            />
           )}
         />
       </View>

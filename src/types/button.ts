@@ -3,5 +3,8 @@ import { MaterialIcons } from "@expo/vector-icons";
 export type ButtonProps = {
   title: string;
   icon?: keyof typeof MaterialIcons.glyphMap;
-  onPress: () => void;
+  onPress?: () => void;
+  size?: 'sm';
+  isSelected?: boolean;
+  variant?: 'default' | 'positive' | 'negative'
 };

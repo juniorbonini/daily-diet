@@ -19,12 +19,17 @@ async function getById(id: string): Promise<Diet | undefined> {
   return diets.find((diet) => diet.id === id);
 }
 
-async function create(diet: Diet): Promise<void> {
-  const diets = await getAll();
+async function create(newDiet: Diet) {
+  try {
+    const stored = await AsyncStorage.getItem(DIET_COLLECTION);
+    const diets: Diet[] = stored ? JSON.parse(stored) : [];
 
-  const newDiets = [...diets, diet];
+    diets.push(newDiet);
 
-  await AsyncStorage.setItem(DIET_COLLECTION, JSON.stringify(newDiets));
+    await AsyncStorage.setItem(DIET_COLLECTION, JSON.stringify(diets));
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function update(updateDiet: Diet): Promise<void> {
