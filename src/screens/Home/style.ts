@@ -68,4 +68,9 @@ export const styles = StyleSheet.create({
     height: 14,
     borderRadius: 7,
   },
+  dietDate: {
+    fontWeight: 'bold',
+    marginBottom: 10,
+    fontSize: 16
+  }
 });

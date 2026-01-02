@@ -1,23 +1,31 @@
-import { Text, TouchableOpacity } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Text, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import { styles } from "./styles";
+import { DietQuantity } from "@/types/diet";
 import { colors } from "@/theme/colorTheme";
+import { RoutesParams } from "@/types/routes.params";
 
-export function Percent() {
+type NavigationProp = NativeStackScreenProps<RoutesParams, 'statistics'>
+
+export function Percent({ value, isPositive }: DietQuantity) {
+  const navigation = useNavigation<NavigationProp>()
+
   return (
     <TouchableOpacity
-      onPress={() => {}}
+      onPress={() => navigation.navigate('statistics')}
       activeOpacity={0.7}
-      style={styles.container}
+      style={[styles.container, isPositive ? styles.positive : styles.negative]}
     >
       <MaterialIcons
         name="arrow-outward"
         size={26}
-        color={colors.green["green-dark"]}
+        color={isPositive ? `${colors.green["green-dark"]}` : `${colors.red["red-dark"]}`}
         style={{ position: "absolute", top: 5, right: 5 }}
       />
-      <Text style={styles.percentage}>50%</Text>
+      <Text style={styles.percentage}>{value}%</Text>
       <Text style={styles.text}>das refeições dentro da dieta</Text>
     </TouchableOpacity>
   );

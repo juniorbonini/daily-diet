@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
     width: 327,
     marginHorizontal: "auto",
     height: 102,
-    backgroundColor: colors.green["green-mid"],
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
@@ -20,4 +19,10 @@ export const styles = StyleSheet.create({
     fontSize: 35,
     fontWeight: "bold",
   },
+  positive: {
+    backgroundColor: colors.green["green-light"]
+  },
+  negative: {
+    backgroundColor: colors.red["red-light"]
+  }
 });

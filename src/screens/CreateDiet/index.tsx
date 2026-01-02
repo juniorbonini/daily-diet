@@ -88,9 +88,7 @@ export function CreateDiet() {
           </View>
         </View>
 
-        <TouchableOpacity onPress={handleSubmit(handleCreateDiet)}>
-          <Text>Cadastrar</Text>
-        </TouchableOpacity>
+          <Button title="Cadastrar refeição" onPress={handleSubmit(handleCreateDiet)} />
       </View>
     </View>
   );
