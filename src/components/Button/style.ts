@@ -1,4 +1,5 @@
 import { colors } from "@/theme/colorTheme";
+import { fontFamily } from "@/theme/fontFamily";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -8,16 +9,18 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: "center",
     alignItems: "center",
-    gap: 5,
     backgroundColor: colors.gray[700],
     borderRadius: 8,
     marginHorizontal: 'auto',
-    marginBottom: 35
   },
   title: {
     fontSize: 16,
     color: colors.gray[0],
-    fontWeight: 'bold',
+    fontFamily: fontFamily.bold
+  },
+  smallTitle: {
+    color: colors.gray[700],
+    textAlign: 'center'
   },
   isSelected: {
     borderWidth: 1,
@@ -33,12 +36,13 @@ export const styles = StyleSheet.create({
   },
   
    smallContainer: {
-    width: 150,
-    height: 55,
+    width: 155,
     justifyContent: 'center',
     alignItems: 'center',
+    textAlign: 'center',
     color: colors.gray[700],
     borderRadius: 8,
     backgroundColor: colors.gray[200]
-   }
+   },
+
 });

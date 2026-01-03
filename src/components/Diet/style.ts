@@ -1,10 +1,10 @@
 import { colors } from "@/theme/colorTheme";
+import { fontFamily } from "@/theme/fontFamily";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
     width: 327,
-    height: 49,
     borderRadius: 8,
     borderWidth: 1,
     borderColor: colors.gray[300],
@@ -16,14 +16,16 @@ export const styles = StyleSheet.create({
     marginBottom: 15,
   },
   hour: {
-    fontWeight: "bold",
+    fontFamily: fontFamily.bold,
+    fontSize: 14,
   },
   divider: {
-    height: 14,
-    backgroundColor: colors.gray[100],
+    backgroundColor: colors.gray[300],
+    width: 2,
   },
   name: {
     fontSize: 16,
+    fontFamily: fontFamily.regular
   },
   circle: {
     width: 14,

@@ -10,8 +10,7 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.gray[300],
   },
   title: {
-    fontSize: 30,
-    fontWeight: "bold",
+    fontSize: 22,
     marginHorizontal: 'auto'
   },
 });

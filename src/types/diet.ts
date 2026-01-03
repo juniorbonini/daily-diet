@@ -24,8 +24,9 @@ export type DietSection = {
   data: Diet[];
 }
 
-export type DietQuantity = {
+export type DietProps = {
   value: number;
   total?: number;
-  isPositive: boolean
+  isPositive: boolean;
+  variant: 'large' | '';
 }

@@ -17,20 +17,21 @@ export function Feedback() {
   const route = useRoute();
   const { id } = route.params as { id: string };
   const navigation = useNavigation<NavigationProp>();
-  const [diet, setDiet] = useState<Diet | null>(null);
+  const [diets, setDiets] = useState<Diet | null>(null);
 
-  useEffect(() => {
-    async function loadDiet() {
+    useEffect(() => {
+    async function loadDiet(id: string) {
       const data = await dietStorage.getById(id);
-      if (data) {
-        setDiet(data);
+
+      if(data){
+        setDiets(data)
       }
     }
+    loadDiet(id);
+  }, [])
 
-    loadDiet();
-  }, [id]);
   return (
-    diet?.isOnDiet ? (
+    diets?.isOnDiet ? (
       <View style={styles.container}>
       <View style={styles.feedbacktextContainer}>
         <Text style={styles.title}>Continue assim!</Text>

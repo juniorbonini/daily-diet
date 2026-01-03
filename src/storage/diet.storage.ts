@@ -1,53 +1,46 @@
-import { Diet } from "../types/diet";
+import { Diet } from "@/types/diet";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const DIET_COLLECTION = "@daily-diet:diet";
+const DIET_COLLECTION = '@dailydiets:diet';
+
+async function readStorage(): Promise<Diet[]> {
+  const storage = await AsyncStorage.getItem(DIET_COLLECTION);
+  return storage ? JSON.parse(storage) : [];
+}
+
+async function writeStorage(diets: Diet[]): Promise<void> {
+  await AsyncStorage.setItem(DIET_COLLECTION, JSON.stringify(diets))
+}
 
 async function getAll(): Promise<Diet[]> {
-  const storage = await AsyncStorage.getItem(DIET_COLLECTION);
-
-  if (!storage) {
-    return [];
-  }
-
-  return JSON.parse(storage) as Diet[];
+  return readStorage();
 }
 
 async function getById(id: string): Promise<Diet | undefined> {
-  const diets = await getAll();
-
-  return diets.find((diet) => diet.id === id);
+  const diets = await readStorage();
+  return diets.find(diet => diet.id === id);
 }
 
-async function create(newDiet: Diet) {
-  try {
-    const stored = await AsyncStorage.getItem(DIET_COLLECTION);
-    const diets: Diet[] = stored ? JSON.parse(stored) : [];
-
-    diets.push(newDiet);
-
-    await AsyncStorage.setItem(DIET_COLLECTION, JSON.stringify(diets));
-  } catch (error) {
-    throw error;
-  }
+async function create(newDiet: Diet): Promise<void> {
+  const diets = await readStorage();
+  await writeStorage([...diets, newDiet])
 }
 
-async function update(updateDiet: Diet): Promise<void> {
-  const diets = await getAll();
+async function update(updatedDiet: Diet): Promise<void> {
+  const diets = await readStorage();
 
-  const newDiet = diets.map((diet) =>
-    diet.id === updateDiet.id ? updateDiet : diet
-  );
+  const updated = diets.map(diet =>
+    diet.id === updatedDiet.id ? updatedDiet : diet
+  )
 
-  return AsyncStorage.setItem(DIET_COLLECTION, JSON.stringify(newDiet));
+  await writeStorage(updated);
 }
 
 async function remove(id: string): Promise<void> {
-  const diets = await getAll();
+  const diets = await readStorage()
+  const filtered = diets.filter(diet => diet.id !== id);
 
-  const removeDiet = diets.filter((diet) => diet.id !== id);
-
-  return AsyncStorage.setItem(DIET_COLLECTION, JSON.stringify(removeDiet));
+  await writeStorage(filtered)
 }
 
 export const dietStorage = {
@@ -55,5 +48,5 @@ export const dietStorage = {
   getById,
   create,
   update,
-  remove,
-};
+  remove
+}

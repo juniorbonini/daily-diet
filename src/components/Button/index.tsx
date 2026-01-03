@@ -1,5 +1,5 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 import { styles } from "./style";
 import { colors } from "@/theme/colorTheme";
@@ -20,13 +20,16 @@ export function Button({
       style={[
         styles.container,
         size === "sm" && styles.smallContainer,
+        
         isSelected && styles.isSelected,
         isSelected && variant === 'positive' && styles.positive,
         isSelected && variant === 'negative' && styles.negative,
       ]}
     >
       <MaterialIcons name={icon} size={24} color={colors.gray[0]} />
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[styles.title,
+      size === 'sm' && styles.smallTitle
+      ]}>{title}</Text>
     </TouchableOpacity>
   );
 }

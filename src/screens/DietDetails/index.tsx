@@ -1,60 +1,139 @@
-import { useEffect, useState } from "react";
-import { Diet } from "../../types/diet";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { dietStorage } from "../../storage/diet.storage";
-import { Text, TouchableOpacity, View } from "react-native";
-import { RoutesParams } from "@/types/routes.params";
+import { dietStorage } from "@/storage/diet.storage";
 import { colors } from "@/theme/colorTheme";
+import { Diet } from "@/types/diet";
+import { RoutesParams } from "@/types/routes.params";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useEffect, useState } from "react";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
+import { styles } from "./style";
+import { Button } from "@/components/Button";
 
-type NavigationProp = NativeStackNavigationProp<RoutesParams, "details">;
+type NavigationProp = NativeStackScreenProps<RoutesParams, "details">;
 
 export function DietDetails() {
   const route = useRoute();
-  const navigation = useNavigation<NavigationProp>();
   const { id } = route.params as { id: string };
-  const [diet, setDiet] = useState<Diet | null>(null);
-  const [loading, setLoading] = useState(true);
+  const navigation = useNavigation<NavigationProp>();
+  const [diets, setDiets] = useState<Diet | undefined>(undefined);
 
   useEffect(() => {
-    async function loadDiet() {
-      const diet = await dietStorage.getById(id);
+    async function loadDiet(id: string) {
+      const data = await dietStorage.getById(id);
 
-      setDiet(diet ?? null);
-      setLoading(false);
+      if (data) {
+        setDiets(data);
+      }
     }
 
-    loadDiet();
-  }, [id]);
+    loadDiet(id);
+  }, []);
 
-  if (loading) {
-    return <Text>Carregando...</Text>;
-  }
-
-  if (!diet) {
-    return <Text>Refeição não encontrada!</Text>;
+  async function handleRemove() {
+    Alert.alert("Excluir refeição", "Deseja realmente excluir esta refeição?", [
+      {
+        text: "Cancelar",
+        style: "cancel",
+      },
+      {
+        text: "Excluir",
+        style: "destructive",
+        onPress: async () => {
+          if (!diets) return;
+          await dietStorage.remove(diets?.id);
+          navigation.navigate('home');
+        },
+      },
+    ]);
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: diet?.isOnDiet
-          ? `${colors.green["green-mid"]}`
-          : `${colors.red["red-mid"]}`,
-      }}
-    >
-      <Text>{diet.name}</Text>
-      <Text>{diet.description}</Text>
-      <Text>
-        {diet.date} • {diet.hour}
-      </Text>
-      <Text>{diet.isOnDiet}</Text>
-      <TouchableOpacity onPress={() => navigation.navigate("home")}>
-        <Text>Home Screen</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+      {diets?.isOnDiet ? (
+        <View
+          style={[
+            styles.headerContainer,
+            { backgroundColor: colors.green["green-light"] },
+          ]}
+        >
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => navigation.navigate("home")}
+          >
+            <MaterialIcons
+              name="arrow-back"
+              size={24}
+              color={colors.gray[500]}
+            />
+          </TouchableOpacity>
+          <Text style={styles.title}>Refeições</Text>
+        </View>
+      ) : (
+        <View
+          style={[
+            styles.headerContainer,
+            { backgroundColor: colors.red["red-light"] },
+          ]}
+        >
+          <TouchableOpacity
+            activeOpacity={0.7}
+            onPress={() => navigation.navigate("home")}
+          >
+            <MaterialIcons
+              name="arrow-back"
+              size={24}
+              color={colors.gray[500]}
+            />
+          </TouchableOpacity>
+          <Text style={styles.title}>Refeições</Text>
+        </View>
+      )}
+      <View style={styles.content}>
+        <View style={styles.nameContainer}>
+          <Text style={styles.subtitle}>{diets?.name}</Text>
+          <Text style={styles.description}>{diets?.description}</Text>
+        </View>
+        <View>
+          <Text style={styles.date}>Data e hora</Text>
+          <Text style={styles.dateText}>
+            {diets?.date} às {diets?.hour}
+          </Text>
+        </View>
+        {diets?.isOnDiet ? (
+          <View style={styles.tag}>
+            <Text
+              style={[
+                diets?.isOnDiet && styles.status,
+                { backgroundColor: colors.green["green-mid"] },
+              ]}
+            ></Text>
+            <Text>dentro da dieta</Text>
+          </View>
+        ) : (
+          <View style={styles.tag}>
+            <Text
+              style={[
+                styles.status,
+                { backgroundColor: colors.red["red-mid"] },
+              ]}
+            ></Text>
+            <Text>fora da dieta</Text>
+          </View>
+        )}
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Editar refeição"
+            icon="edit"
+            onPress={() => navigation.navigate("edit", { id })}
+          />
+          <Button
+            title="Excluir refeição"
+            icon="delete-outline"
+            onPress={handleRemove}
+          />
+        </View>
+      </View>
     </View>
   );
 }

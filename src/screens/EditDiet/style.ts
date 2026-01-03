@@ -1,5 +1,4 @@
 import { colors } from "@/theme/colorTheme";
-import { fontFamily } from "@/theme/fontFamily";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -7,16 +6,16 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 28,
-    color: colors.gray[700],
-    fontFamily: fontFamily.bold
+    fontSize: 30,
+    color: colors.gray[700]
   },
   formContainer: {
+    height: '100%',
     backgroundColor: colors.gray[0],
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
-    paddingHorizontal: 25,
-    gap: 55,
+    padding: 25,
+    gap: 40,
     marginTop: -22
   },
   inputRow: {
@@ -32,6 +31,6 @@ export const styles = StyleSheet.create({
     marginHorizontal: 15,
     fontSize: 14,
     color: colors.gray[600],
-    fontFamily: fontFamily.bold
+    fontWeight: 'bold'
   }
 });

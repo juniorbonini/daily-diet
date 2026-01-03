@@ -7,7 +7,7 @@ export function DietItem({ data, onPress }: DietData) {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Text style={styles.hour}>{data.hour}</Text>
-      <View style={styles.divider}><Text>|</Text></View>
+      <View style={styles.divider}><Text></Text></View>
       <Text style={styles.name}>{data.name}</Text>
       <View
         style={[

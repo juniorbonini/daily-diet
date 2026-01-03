@@ -1,4 +1,5 @@
 import { colors } from "@/theme/colorTheme";
+import { fontFamily } from "@/theme/fontFamily";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
@@ -14,9 +15,11 @@ export const styles = StyleSheet.create({
   text: {
     color: colors.gray[500],
     fontSize: 14,
+    fontFamily: fontFamily.regular,
   },
   percentage: {
-    fontSize: 35,
+    fontSize: 32,
+    fontFamily: fontFamily.bold,
     fontWeight: "bold",
   },
   positive: {
@@ -24,5 +27,9 @@ export const styles = StyleSheet.create({
   },
   negative: {
     backgroundColor: colors.red["red-light"]
+  },
+  largeContainer: {
+    width: '100%',
+    height: 170
   }
 });

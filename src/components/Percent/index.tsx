@@ -4,20 +4,20 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 import { styles } from "./styles";
-import { DietQuantity } from "@/types/diet";
+import { DietProps } from "@/types/diet";
 import { colors } from "@/theme/colorTheme";
 import { RoutesParams } from "@/types/routes.params";
 
 type NavigationProp = NativeStackScreenProps<RoutesParams, 'statistics'>
 
-export function Percent({ value, isPositive }: DietQuantity) {
+export function Percent({ value, isPositive, variant }: DietProps) {
   const navigation = useNavigation<NavigationProp>()
 
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('statistics')}
       activeOpacity={0.7}
-      style={[styles.container, isPositive ? styles.positive : styles.negative]}
+      style={[styles.container, isPositive ? styles.positive : styles.negative, variant && styles.largeContainer]}
     >
       <MaterialIcons
         name="arrow-outward"

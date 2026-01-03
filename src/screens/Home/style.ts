@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import { colors } from "@/theme/colorTheme";
+import { fontFamily } from "@/theme/fontFamily";
 
 export const styles = StyleSheet.create({
   container: {
@@ -69,8 +70,12 @@ export const styles = StyleSheet.create({
     borderRadius: 7,
   },
   dietDate: {
-    fontWeight: 'bold',
     marginBottom: 10,
-    fontSize: 16
+    marginTop: 10,
+    fontSize: 16,
+    fontFamily: fontFamily.bold
+  },
+  buttonContainer:{ 
+    marginBottom: 35
   }
 });

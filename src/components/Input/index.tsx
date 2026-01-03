@@ -1,15 +1,16 @@
 import { InputProps } from "@/types/input";
 import { useRef, useState } from "react";
-import { Controller, FieldValues } from "react-hook-form";
+import { Controller, FieldValues, useForm } from "react-hook-form";
 import { Text, TextInput, View } from "react-native";
 import { styles } from "./style";
 
 export function Input<T extends FieldValues>({
-  control,
   name,
   label,
+  control,
   multiLine,
   size,
+  rules,
   ...rest
 }: InputProps<T>) {
   const inputRef = useRef<TextInput>(null);
@@ -26,7 +27,8 @@ export function Input<T extends FieldValues>({
     <Controller
       control={control}
       name={name}
-      render={({ field: { onChange, value } }) => {
+      rules={rules}
+      render={({ field: { onChange, value }, fieldState: { error } }) => {
         return (
           <View style={styles.container}>
             <Text style={styles.label}>{label}</Text>
@@ -41,6 +43,7 @@ export function Input<T extends FieldValues>({
                 size === "sm" && styles.smInput,
                 size === "lg" && styles.lgInput,
                 isFocused && styles.InputOnFocus,
+                error && styles.errorInput
               ]}
               ref={inputRef}
               onFocus={handleFocus}
@@ -48,6 +51,11 @@ export function Input<T extends FieldValues>({
               onEndEditing={handleFocus}
               {...rest}
             />
+            {error && (
+              <Text style={styles.errorMessage}>
+                {error.message}
+              </Text>
+            )}
           </View>
         );
       }}

@@ -1,4 +1,4 @@
 export const fontFamily = {
-    regular: '',
-    bold: '',
+    regular: 'NunitoSans_400Regular',
+    bold: 'NunitoSans_700Bold',
 }

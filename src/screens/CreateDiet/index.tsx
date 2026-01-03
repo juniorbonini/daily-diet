@@ -12,10 +12,10 @@ import { CreateFormData, Diet } from "@/types/diet";
 import { dietStorage } from "@/storage/diet.storage";
 import { RoutesParams } from "@/types/routes.params";
 
-type NavigationProp = NativeStackNavigationProp<RoutesParams, 'create'>
+type NavigationProp = NativeStackNavigationProp<RoutesParams, "create">;
 
 export function CreateDiet() {
-  const navigation = useNavigation<NavigationProp>()
+  const navigation = useNavigation<NavigationProp>();
   const [isOnDiet, setIsOnDiet] = useState<boolean | null>(null);
   const { control, handleSubmit } = useForm<CreateFormData>({
     defaultValues: {
@@ -35,20 +35,32 @@ export function CreateDiet() {
       id: `${Date.now()}-${Math.random()}`,
       ...data,
       isOnDiet,
-    }
-    await dietStorage.create(newDiet)
-    navigation.navigate('feedback', { id: newDiet.id })
+    };
+    await dietStorage.create(newDiet);
+    navigation.navigate("feedback", { id: newDiet.id });
   }
 
   return (
     <View style={styles.container}>
       <Header />
       <View style={styles.formContainer}>
-        <Input control={control} name="name" multiLine={false} label="Nome" />
+        <Input
+          control={control}
+          name="name"
+          rules={{
+            required: "O nome da refeição é obrigatório",
+          }}
+          multiLine={false}
+          label="Nome"
+        />
         <Input
           control={control}
           name="description"
           multiLine={true}
+          rules={{
+            required: "A descrição da refeição é obrigatório",
+            minLength: 10,
+          }}
           label="Descrição"
           size="lg"
         />
@@ -56,6 +68,9 @@ export function CreateDiet() {
           <Input
             control={control}
             name="date"
+            rules={{
+              required: "A data da refeição é obrigatória",
+            }}
             multiLine={false}
             size="sm"
             label="Data"
@@ -63,6 +78,9 @@ export function CreateDiet() {
           <Input
             control={control}
             name="hour"
+            rules={{
+              required: "A hora da refeição é obrigatória",
+            }}
             multiLine={false}
             size="sm"
             label="Hora"
@@ -88,7 +106,10 @@ export function CreateDiet() {
           </View>
         </View>
 
-          <Button title="Cadastrar refeição" onPress={handleSubmit(handleCreateDiet)} />
+        <Button
+          title="Cadastrar refeição"
+          onPress={handleSubmit(handleCreateDiet)}
+        />
       </View>
     </View>
   );
