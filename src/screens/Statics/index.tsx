@@ -1,21 +1,21 @@
 import { Text, View } from "react-native";
 import { useCallback, useState } from "react";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 import { styles } from "./style";
 import { Diet } from "@/types/diet";
 import { Button } from "@/components/Button";
 import { Percent } from "@/components/Percent";
+import { RoutesParams } from "@/types/routes.params";
 import { dietStorage } from "@/storage/diet.storage";
 import { calculateDietStatus } from "@/utils/dietState";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RoutesParams } from "@/types/routes.params";
 
-type NavigationProp = NativeStackScreenProps<RoutesParams, 'statistics'>
+type NavigationProp = NativeStackScreenProps<RoutesParams, "statistics">;
 
 export function Statistic() {
   const [diets, setDiets] = useState<Diet[]>([]);
-  const navigation = useNavigation<NavigationProp>()
+  const navigation = useNavigation<NavigationProp>();
   const { percent, isPositive, dietsOnDiet, total, dietsOutDiet } =
     calculateDietStatus(diets);
 
@@ -30,7 +30,7 @@ export function Statistic() {
   );
   return (
     <View style={styles.container}>
-      <Percent value={percent} isPositive={isPositive} variant="large" />
+        <Percent value={percent} isPositive={isPositive} variant="large" />
       <View style={styles.content}>
         <Text style={styles.title}>Estatísticas gerais</Text>
         <View style={styles.sequence}>
@@ -54,7 +54,10 @@ export function Statistic() {
           </View>
         </View>
         <View style={styles.buttonContainer}>
-          <Button title="Ir para a página inicial" onPress={() => navigation.navigate('home')} />
+          <Button
+            title="Ir para a página inicial"
+            onPress={() => navigation.navigate("home")}
+          />
         </View>
       </View>
     </View>

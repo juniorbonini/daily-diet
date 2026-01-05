@@ -61,7 +61,7 @@ export function Home() {
         <Image source={userImage} />
       </View>
       <View>
-        <Percent value={percent} isPositive={isPositive} variant="" />
+        <Percent value={percent} isPositive={isPositive} showIcon />
       </View>
       <Text style={styles.title}>Refeições</Text>
 

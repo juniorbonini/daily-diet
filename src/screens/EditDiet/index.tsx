@@ -12,10 +12,10 @@ import { CreateFormData, Diet } from "@/types/diet";
 import { dietStorage } from "@/storage/diet.storage";
 import { RoutesParams } from "@/types/routes.params";
 
-// type NavigationProp = NativeStackNavigationProp<RoutesParams, 'edit'>
+type NavigationProp = NativeStackNavigationProp<RoutesParams, 'edit'>
 
 export function EditDiet() {
-  // const navigation = useNavigation<NavigationProp>()
+  const navigation = useNavigation<NavigationProp>()
   const route = useRoute();
   const { id } = route.params as { id: string };
   const [isOnDiet, setIsOnDiet] = useState<boolean | null>(null);
@@ -52,7 +52,7 @@ export function EditDiet() {
       hour: data.hour,
       isOnDiet,
     };
-
+    navigation.navigate('home')
     await dietStorage.update(updateDiet);
   }
 
@@ -60,13 +60,14 @@ export function EditDiet() {
     <View style={styles.container}>
       <Header />
       <View style={styles.formContainer}>
-        <Input control={control} name="name" multiLine={false} label="Nome" />
+        <Input control={control} name="name" multiLine={false} label="Nome" rules={{}} />
         <Input
           control={control}
           name="description"
           multiLine={true}
           label="Descrição"
           size="lg"
+          rules={{}}
         />
         <View style={styles.inputRow}>
           <Input
@@ -76,6 +77,7 @@ export function EditDiet() {
             size="sm"
             label="Data"
             editable={false}
+            rules={{}}
           />
           <Input
             control={control}
@@ -83,6 +85,7 @@ export function EditDiet() {
             multiLine={false}
             size="sm"
             label="Hora"
+            rules={{}}
           />
         </View>
         <View>

@@ -1,14 +1,15 @@
-import { dietStorage } from "@/storage/diet.storage";
-import { colors } from "@/theme/colorTheme";
-import { Diet } from "@/types/diet";
-import { RoutesParams } from "@/types/routes.params";
+import { useEffect, useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { useEffect, useState } from "react";
-import { Alert, Text, TouchableOpacity, View } from "react-native";
+
 import { styles } from "./style";
+import { Diet } from "@/types/diet";
+import { colors } from "@/theme/colorTheme";
 import { Button } from "@/components/Button";
+import { RoutesParams } from "@/types/routes.params";
+import { dietStorage } from "@/storage/diet.storage";
 
 type NavigationProp = NativeStackScreenProps<RoutesParams, "details">;
 

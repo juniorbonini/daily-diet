@@ -10,7 +10,7 @@ import { RoutesParams } from "@/types/routes.params";
 
 type NavigationProp = NativeStackScreenProps<RoutesParams, 'statistics'>
 
-export function Percent({ value, isPositive, variant }: DietProps) {
+export function Percent({ value, isPositive, variant, showIcon = false }: DietProps) {
   const navigation = useNavigation<NavigationProp>()
 
   return (
@@ -19,12 +19,14 @@ export function Percent({ value, isPositive, variant }: DietProps) {
       activeOpacity={0.7}
       style={[styles.container, isPositive ? styles.positive : styles.negative, variant && styles.largeContainer]}
     >
-      <MaterialIcons
+     {showIcon && (
+       <MaterialIcons
         name="arrow-outward"
         size={26}
         color={isPositive ? `${colors.green["green-dark"]}` : `${colors.red["red-dark"]}`}
         style={{ position: "absolute", top: 5, right: 5 }}
       />
+     ) }
       <Text style={styles.percentage}>{value}%</Text>
       <Text style={styles.text}>das refeições dentro da dieta</Text>
     </TouchableOpacity>

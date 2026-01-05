@@ -1,6 +1,7 @@
-import { DietData } from "@/types/diet";
 import { Text, TouchableOpacity, View } from "react-native";
+
 import { styles } from "./style";
+import { DietData } from "@/types/diet";
 import { colors } from "@/theme/colorTheme";
 
 export function DietItem({ data, onPress }: DietData) {

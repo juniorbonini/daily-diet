@@ -27,6 +27,7 @@ export type DietSection = {
 export type DietProps = {
   value: number;
   total?: number;
+  showIcon?: boolean;
   isPositive: boolean;
-  variant: 'large' | '';
+  variant?: 'large' | 'default';
 }
